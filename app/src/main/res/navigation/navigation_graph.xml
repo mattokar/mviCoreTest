@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/UsersFragment"
+    >
+
+    <fragment
+        android:id="@+id/UsersFragment"
+        android:name="sk.tokar.matus.gr.ui.UsersFragment"
+        tools:layout="@layout/fragment_users"
+        >
+        <action
+            android:id="@+id/action_users_to_detail"
+            app:destination="@id/DetailFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DetailFragment"
+        android:name="sk.tokar.matus.gr.ui.UserDetailsFragment"
+        tools:layout="@layout/fragment_user_details"
+        >
+        <action
+            android:id="@+id/action_detail_to_users"
+            app:destination="@id/UsersFragment"
+            />
+        <argument
+            android:name="userId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+</navigation>
