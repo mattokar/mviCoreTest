@@ -23,10 +23,10 @@ class MainNavigatorImpl @Inject constructor(
 
     override fun navigate(screen: AppViews) {
         when (screen) {
-            is AppViews.UserDetail -> getNavController()?.navigate(UsersFragmentDirections.actionUsersToDetail(screen.userId))
-            AppViews.UsersList -> getNavController()?.navigate(R.id.action_detail_to_users)
+            is AppViews.UserDetail -> navigationController()?.navigate(UsersFragmentDirections.actionUsersToDetail(screen.userId))
+            AppViews.UsersList -> navigationController()?.navigate(R.id.action_detail_to_users)
         }
     }
 
-    private fun getNavController(): NavController? = appActivityManager.getCurrentActivity()?.findNavController(R.id.nav_container)
+    private fun navigationController(): NavController? = appActivityManager.getCurrentActivity()?.findNavController(R.id.nav_container)
 }
