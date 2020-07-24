@@ -1,9 +1,12 @@
 package sk.tokar.matus.gr.di
 
+import android.content.Context
+import android.content.res.Resources
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import sk.tokar.matus.gr.api.ReqresApi
+import sk.tokar.matus.gr.blogic.NewsListener
 import sk.tokar.matus.gr.blogic.list.UsersListBindings
 import sk.tokar.matus.gr.blogic.list.UsersPresenter
 import sk.tokar.matus.gr.common.*
@@ -14,15 +17,12 @@ class FeaturesModule {
 
     @Singleton
     @Provides
-    fun provideUsersPresenter(reqresApi: ReqresApi): UsersPresenter = UsersPresenter(reqresApi)
+    fun provideUsersListBindings(presenter: UsersPresenter, listener: NewsListener): UsersListBindings = UsersListBindings(presenter, listener)
 
-    @Singleton
-    @Provides
-    fun provideUsersListBindings(presenter: UsersPresenter): UsersListBindings = UsersListBindings(presenter)
 }
 
 @Module
-abstract class CommonModule(){
+abstract class CommonModule{
 
     @Singleton
     @Binds
@@ -39,4 +39,15 @@ class NetworkModule() {
     @Singleton
     @Provides
     fun provideReqresAPi(): ReqresApi = ReqresApi.create()
+}
+
+@Module
+class AndroidModule(context: Context) {
+    private val context: Context = context.applicationContext
+
+    @Provides
+    fun provideContext(): Context = context
+
+    @Provides
+    fun provideResources(): Resources = context.resources
 }

@@ -3,7 +3,7 @@ package sk.tokar.matus.gr.api.models.user_list
 import com.google.gson.annotations.SerializedName
 import sk.tokar.matus.gr.api.models.user_list.Ad
 import sk.tokar.matus.gr.api.models.user_list.Data
-import sk.tokar.matus.gr.ui.User
+import sk.tokar.matus.gr.blogic.list.User
 
 data class UserList(
     @SerializedName("ad")

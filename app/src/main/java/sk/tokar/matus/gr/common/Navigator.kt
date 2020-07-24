@@ -1,5 +1,6 @@
 package sk.tokar.matus.gr.common
 
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import sk.tokar.matus.gr.R
@@ -27,6 +28,5 @@ class MainNavigatorImpl @Inject constructor(
             AppViews.UsersList -> navigationController()?.navigate(R.id.action_detail_to_users)
         }
     }
-
     private fun navigationController(): NavController? = appActivityManager.getCurrentActivity()?.findNavController(R.id.nav_container)
 }

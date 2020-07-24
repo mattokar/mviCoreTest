@@ -9,6 +9,7 @@ import io.reactivex.ObservableSource
 import io.reactivex.Observer
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 
 
 abstract class MviFragment<OUTPUT, INPUT> : ObservableSource<OUTPUT>, Consumer<INPUT>, Fragment() {
@@ -39,4 +40,18 @@ abstract class MviFragment<OUTPUT, INPUT> : ObservableSource<OUTPUT>, Consumer<I
         super.onViewCreated(view, savedInstanceState)
         init(view, savedInstanceState)
     }
+}
+
+abstract class Transformer<INPUT, OUTPUT> : (INPUT) -> OUTPUT? {
+
+    private val tag by lazy { "TRANSFORMER ${this@Transformer.javaClass.simpleName}" }
+
+    override fun invoke(input: INPUT): OUTPUT? {
+        Timber.tag(tag).d("\nINPUT: \n$input")
+        return action(input).also {
+            Timber.tag(tag).d("\nOUTPUT: \n$it")
+        }
+    }
+
+    abstract fun action(input: INPUT): OUTPUT?
 }
