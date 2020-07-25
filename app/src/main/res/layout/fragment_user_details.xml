@@ -10,47 +10,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:background="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/user_avatar"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:textAlignment="center"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/user_avatar"
-            tools:layout_editor_absoluteX="0dp"
-            tools:text="tv" />
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/user_avatar" />
 
         <TextView
-            android:id="@+id/tv_email"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            tools:layout_editor_absoluteX="0dp"
-            tools:text="tv" />
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

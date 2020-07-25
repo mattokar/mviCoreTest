@@ -17,7 +17,6 @@ import javax.inject.Singleton
 @Module
 class FeaturesModule {
 
-    @Singleton
     @Provides
     fun provideUsersListBindings(presenter: UsersPresenter, listener: NewsListener): UsersListBindings = UsersListBindings(presenter, listener)
 

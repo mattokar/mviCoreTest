@@ -15,6 +15,7 @@ import timber.log.Timber
 abstract class MviFragment<OUTPUT, INPUT> : ObservableSource<OUTPUT>, Consumer<INPUT>, Fragment() {
 
     private val source = PublishSubject.create<OUTPUT>()
+    private var bindingsCreated = false
 
     protected fun onNext(t: OUTPUT) {
         source.onNext(t)
@@ -40,21 +41,16 @@ abstract class MviFragment<OUTPUT, INPUT> : ObservableSource<OUTPUT>, Consumer<I
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view, savedInstanceState)
-        getBindings().setup(this)
+        if (!bindingsCreated){
+            getBindings().create(this)
+            bindingsCreated = true
+        }
         afterInitAction()
     }
 }
 
 abstract class Bindings<OUTPUT, INPUT> {
-    private var initiated: Boolean = false
     abstract fun create(view: MviFragment<OUTPUT, INPUT>)
-
-    fun setup(view: MviFragment<OUTPUT, INPUT>) {
-        if (!initiated) {
-            create(view)
-            initiated = true
-        }
-    }
 }
 
 abstract class Transformer<INPUT, OUTPUT> : (INPUT) -> OUTPUT? {

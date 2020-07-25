@@ -43,8 +43,8 @@ class UserDetailsFragment : MviFragment<UserDetailUiEvent, UserDetailViewModel>(
         model.userData?.let { userDetails ->
             swipe_container.isRefreshing = false
             loadImage(requireContext(), userDetails.avatarUrl, user_avatar)
-            tv_name.text = "${userDetails.firstName} ${userDetails.lastName}"
-            tv_email.text = userDetails.email
+            name.text = "${userDetails.firstName} ${userDetails.lastName}"
+            email.text = userDetails.email
         }
     }
 

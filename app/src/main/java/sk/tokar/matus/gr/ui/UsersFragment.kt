@@ -25,25 +25,12 @@ data class UsersViewModel(
 class UsersFragment : MviFragment<UsersUiEvent, UsersViewModel>() {
 
     private lateinit var adapter: UserListAdapter
-
     private val lazyListener = RecyclerViewLazyListener({
         onNext(UsersUiEvent.NextPage(it))
     })
 
     override fun getLayoutResId(): Int = R.layout.fragment_users
     override fun getBindings(): Bindings<UsersUiEvent, UsersViewModel> = App.component.provideUserListBindings()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         adapter = UserListAdapter { onNext(UsersUiEvent.UserSelected(it.id)) }
@@ -63,7 +50,4 @@ class UsersFragment : MviFragment<UsersUiEvent, UsersViewModel>() {
         adapter.update(model.users)
         swipe_container.isRefreshing = model.loading
     }
-
-
-
 }

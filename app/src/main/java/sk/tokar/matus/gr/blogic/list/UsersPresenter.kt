@@ -12,6 +12,7 @@ import sk.tokar.matus.gr.api.models.user_list.convert
 import sk.tokar.matus.gr.blogic.list.UsersPresenter.*
 import sk.tokar.matus.gr.common.toObservable
 import javax.inject.Inject
+import javax.inject.Singleton
 
 data class User(
     val firstName: String,
