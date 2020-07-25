@@ -9,7 +9,6 @@ import io.reactivex.ObservableSource
 import io.reactivex.Observer
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
-import sk.tokar.matus.gr.blogic.details.Bindings
 import timber.log.Timber
 
 
@@ -26,11 +25,8 @@ abstract class MviFragment<OUTPUT, INPUT> : ObservableSource<OUTPUT>, Consumer<I
     }
 
     abstract fun getLayoutResId(): Int
-
     abstract fun getBindings(): Bindings<OUTPUT, INPUT>
-
     abstract fun initView(view: View, savedInstanceState: Bundle?)
-
     open fun afterInitAction() {}
 
     override fun onCreateView(
@@ -46,6 +42,18 @@ abstract class MviFragment<OUTPUT, INPUT> : ObservableSource<OUTPUT>, Consumer<I
         initView(view, savedInstanceState)
         getBindings().setup(this)
         afterInitAction()
+    }
+}
+
+abstract class Bindings<OUTPUT, INPUT> {
+    private var initiated: Boolean = false
+    abstract fun create(view: MviFragment<OUTPUT, INPUT>)
+
+    fun setup(view: MviFragment<OUTPUT, INPUT>) {
+        if (!initiated) {
+            create(view)
+            initiated = true
+        }
     }
 }
 

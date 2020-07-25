@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.user_item_row.view.*
-import sk.tokar.matus.gr.common.loadImage
 import sk.tokar.matus.gr.R
 import sk.tokar.matus.gr.blogic.list.User
+import sk.tokar.matus.gr.common.loadImage
 import sk.tokar.matus.gr.common.setDataWithDiff
 
 class UserListAdapter(private val action: (user: User) -> Unit) : RecyclerView.Adapter<UserViewHolder>() {
@@ -37,9 +37,9 @@ class UserViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 ) {
     @SuppressLint("SetTextI18n")
     fun bind(user: User) {
-        itemView.tv_user_name.text = "${user.firstName} ${user.lastName}"
-        itemView.tv_user_email.text = user.email
-        loadImage(itemView.context, user.avatarUrl, itemView.iv_user_avatar)
+        itemView.user_name.text = "${user.firstName} ${user.lastName}"
+        itemView.user_email.text = user.email
+        loadImage(itemView.context, user.avatarUrl, itemView.user_avatar)
     }
 }
 

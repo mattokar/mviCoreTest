@@ -6,13 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_users.*
 import sk.tokar.matus.gr.App
 import sk.tokar.matus.gr.R
-import sk.tokar.matus.gr.blogic.details.Bindings
 import sk.tokar.matus.gr.blogic.list.User
-import sk.tokar.matus.gr.blogic.list.UsersListBindings
-import sk.tokar.matus.gr.common.MainNavigator
+import sk.tokar.matus.gr.common.Bindings
 import sk.tokar.matus.gr.common.MviFragment
 import sk.tokar.matus.gr.common.RecyclerViewLazyListener
-import javax.inject.Inject
 
 
 sealed class UsersUiEvent {
@@ -35,6 +32,18 @@ class UsersFragment : MviFragment<UsersUiEvent, UsersViewModel>() {
 
     override fun getLayoutResId(): Int = R.layout.fragment_users
     override fun getBindings(): Bindings<UsersUiEvent, UsersViewModel> = App.component.provideUserListBindings()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         adapter = UserListAdapter { onNext(UsersUiEvent.UserSelected(it.id)) }

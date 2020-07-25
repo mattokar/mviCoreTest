@@ -4,17 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_user_details.*
-import kotlinx.android.synthetic.main.fragment_user_details.swipe_container
-import kotlinx.android.synthetic.main.fragment_users.*
 import sk.tokar.matus.gr.App
 import sk.tokar.matus.gr.R
-import sk.tokar.matus.gr.blogic.details.Bindings
-import sk.tokar.matus.gr.blogic.details.UserDetailBindings
 import sk.tokar.matus.gr.blogic.details.UserDetails
-import sk.tokar.matus.gr.blogic.list.UsersListBindings
+import sk.tokar.matus.gr.common.Bindings
 import sk.tokar.matus.gr.common.MviFragment
 import sk.tokar.matus.gr.common.loadImage
-import javax.inject.Inject
 
 sealed class UserDetailUiEvent {
     data class Init (val id: Int) : UserDetailUiEvent()
@@ -47,7 +42,7 @@ class UserDetailsFragment : MviFragment<UserDetailUiEvent, UserDetailViewModel>(
     override fun accept(model: UserDetailViewModel) {
         model.userData?.let { userDetails ->
             swipe_container.isRefreshing = false
-            loadImage(requireContext(), userDetails.avatarUrl, iv_user_avatar)
+            loadImage(requireContext(), userDetails.avatarUrl, user_avatar)
             tv_name.text = "${userDetails.firstName} ${userDetails.lastName}"
             tv_email.text = userDetails.email
         }

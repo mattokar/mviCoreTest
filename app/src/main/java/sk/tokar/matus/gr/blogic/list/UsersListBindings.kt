@@ -1,21 +1,17 @@
 package sk.tokar.matus.gr.blogic.list
 
-import com.badoo.mvicore.android.AndroidBindings
+import com.badoo.mvicore.android.lifecycle.CreateDestroyBinderLifecycle
 import com.badoo.mvicore.android.lifecycle.ResumePauseBinderLifecycle
 import com.badoo.mvicore.binder.Binder
 import com.badoo.mvicore.binder.using
 import sk.tokar.matus.gr.blogic.NewsListener
-import sk.tokar.matus.gr.blogic.NewsListener.*
-import sk.tokar.matus.gr.blogic.details.Bindings
+import sk.tokar.matus.gr.blogic.NewsListener.CommonNews
 import sk.tokar.matus.gr.blogic.list.UsersPresenter.*
-import sk.tokar.matus.gr.common.AppActivityManager
-import sk.tokar.matus.gr.common.MainNavigator
+import sk.tokar.matus.gr.common.Bindings
 import sk.tokar.matus.gr.common.MviFragment
 import sk.tokar.matus.gr.common.Transformer
-import sk.tokar.matus.gr.ui.UsersFragment
 import sk.tokar.matus.gr.ui.UsersUiEvent
 import sk.tokar.matus.gr.ui.UsersViewModel
-import timber.log.Timber
 
 class UsersListBindings(
     private val presenter: UsersPresenter,

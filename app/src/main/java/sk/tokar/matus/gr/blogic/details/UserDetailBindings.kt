@@ -1,21 +1,16 @@
 package sk.tokar.matus.gr.blogic.details
 
-import androidx.fragment.app.Fragment
-import com.badoo.mvicore.android.AndroidBindings
 import com.badoo.mvicore.android.lifecycle.CreateDestroyBinderLifecycle
-import com.badoo.mvicore.android.lifecycle.ResumePauseBinderLifecycle
 import com.badoo.mvicore.binder.Binder
-import com.badoo.mvicore.binder.lifecycle.Lifecycle
 import com.badoo.mvicore.binder.using
 import sk.tokar.matus.gr.blogic.NewsListener
-import sk.tokar.matus.gr.blogic.NewsListener.*
+import sk.tokar.matus.gr.blogic.NewsListener.CommonNews
 import sk.tokar.matus.gr.blogic.details.UserDetailPresenter.*
-import sk.tokar.matus.gr.blogic.list.UsersPresenter
+import sk.tokar.matus.gr.common.Bindings
 import sk.tokar.matus.gr.common.MviFragment
 import sk.tokar.matus.gr.common.Transformer
 import sk.tokar.matus.gr.ui.UserDetailUiEvent
 import sk.tokar.matus.gr.ui.UserDetailViewModel
-import sk.tokar.matus.gr.ui.UserDetailsFragment
 
 class UserDetailBindings(
     private val presenter: UserDetailPresenter,
@@ -26,18 +21,6 @@ class UserDetailBindings(
             binder.bind(view to presenter using UserDetailViewToPresenter)
             binder.bind(presenter to view using UserDetailPresenterToView)
             binder.bind(presenter.news to listener using UserDetailPresenterNewsToCommonNews)
-    }
-}
-
-abstract class Bindings<OUTPUT, INPUT> {
-    private var initiated: Boolean = false
-    abstract fun create(view: MviFragment<OUTPUT, INPUT>)
-
-    fun setup(view: MviFragment<OUTPUT, INPUT>) {
-        if (!initiated) {
-            create(view)
-            initiated = true
-        }
     }
 }
 
