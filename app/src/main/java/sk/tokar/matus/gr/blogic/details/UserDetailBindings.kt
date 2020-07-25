@@ -2,6 +2,7 @@ package sk.tokar.matus.gr.blogic.details
 
 import androidx.fragment.app.Fragment
 import com.badoo.mvicore.android.AndroidBindings
+import com.badoo.mvicore.android.lifecycle.CreateDestroyBinderLifecycle
 import com.badoo.mvicore.android.lifecycle.ResumePauseBinderLifecycle
 import com.badoo.mvicore.binder.Binder
 import com.badoo.mvicore.binder.lifecycle.Lifecycle
@@ -21,7 +22,7 @@ class UserDetailBindings(
     private val listener: NewsListener
 ): Bindings<UserDetailUiEvent, UserDetailViewModel>() {
     override fun create(view: MviFragment<UserDetailUiEvent, UserDetailViewModel>) {
-            val binder = Binder(ResumePauseBinderLifecycle(view.lifecycle))
+            val binder = Binder(CreateDestroyBinderLifecycle(view.lifecycle))
             binder.bind(view to presenter using UserDetailViewToPresenter)
             binder.bind(presenter to view using UserDetailPresenterToView)
             binder.bind(presenter.news to listener using UserDetailPresenterNewsToCommonNews)

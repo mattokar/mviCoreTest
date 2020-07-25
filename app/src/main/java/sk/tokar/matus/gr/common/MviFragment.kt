@@ -29,7 +29,9 @@ abstract class MviFragment<OUTPUT, INPUT> : ObservableSource<OUTPUT>, Consumer<I
 
     abstract fun getBindings(): Bindings<OUTPUT, INPUT>
 
-    abstract fun init(view: View, savedInstanceState: Bundle?)
+    abstract fun initView(view: View, savedInstanceState: Bundle?)
+
+    open fun afterInitAction() {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,8 +43,9 @@ abstract class MviFragment<OUTPUT, INPUT> : ObservableSource<OUTPUT>, Consumer<I
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init(view, savedInstanceState)
+        initView(view, savedInstanceState)
         getBindings().setup(this)
+        afterInitAction()
     }
 }
 

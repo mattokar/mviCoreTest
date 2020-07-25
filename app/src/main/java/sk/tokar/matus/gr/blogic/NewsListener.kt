@@ -2,7 +2,8 @@ package sk.tokar.matus.gr.blogic
 
 
 import io.reactivex.functions.Consumer
-import sk.tokar.matus.gr.blogic.list.UsersPresenter.News
+import sk.tokar.matus.gr.R
+import sk.tokar.matus.gr.common.AppActivityManager
 import sk.tokar.matus.gr.common.AppViews
 import sk.tokar.matus.gr.common.MainNavigator
 import javax.inject.Inject
@@ -10,7 +11,8 @@ import javax.inject.Singleton
 
 @Singleton
 class NewsListener @Inject constructor(
-    private val mainNavigator: MainNavigator
+    private val mainNavigator: MainNavigator,
+    private val appActivityManager: AppActivityManager
 ) : Consumer<NewsListener.CommonNews> {
 
     sealed class CommonNews {
@@ -23,6 +25,7 @@ class NewsListener @Inject constructor(
         when (news) {
             is CommonNews.OpenDetail -> mainNavigator.navigate(AppViews.UserDetail(news.id))
             CommonNews.OpenList -> mainNavigator.navigate(AppViews.UsersList)
+            is CommonNews.Error -> appActivityManager.getCurrentActivity()?.showMessage(R.string.general_error)
         }
     }
 }

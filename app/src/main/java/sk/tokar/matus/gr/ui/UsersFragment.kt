@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_users.*
 import sk.tokar.matus.gr.App
 import sk.tokar.matus.gr.R
+import sk.tokar.matus.gr.blogic.details.Bindings
 import sk.tokar.matus.gr.blogic.list.User
 import sk.tokar.matus.gr.blogic.list.UsersListBindings
 import sk.tokar.matus.gr.common.MainNavigator
@@ -26,7 +27,6 @@ data class UsersViewModel(
 
 class UsersFragment : MviFragment<UsersUiEvent, UsersViewModel>() {
 
-    private lateinit var bindings: UsersListBindings
     private lateinit var adapter: UserListAdapter
 
     private val lazyListener = RecyclerViewLazyListener({
@@ -34,9 +34,9 @@ class UsersFragment : MviFragment<UsersUiEvent, UsersViewModel>() {
     })
 
     override fun getLayoutResId(): Int = R.layout.fragment_users
+    override fun getBindings(): Bindings<UsersUiEvent, UsersViewModel> = App.component.provideUserListBindings()
 
-    override fun init(view: View, savedInstanceState: Bundle?) {
-        bindings = App.component.provideUserListBindings()
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         adapter = UserListAdapter { onNext(UsersUiEvent.UserSelected(it.id)) }
         rv_users.apply {
             adapter = this@UsersFragment.adapter
@@ -48,12 +48,13 @@ class UsersFragment : MviFragment<UsersUiEvent, UsersViewModel>() {
             lazyListener.reset()
             onNext(UsersUiEvent.NextPage())
         }
-        bindings.create(this)
     }
 
     override fun accept(model: UsersViewModel) {
         adapter.update(model.users)
         swipe_container.isRefreshing = model.loading
     }
+
+
 
 }

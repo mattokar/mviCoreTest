@@ -6,9 +6,11 @@ import com.badoo.mvicore.binder.Binder
 import com.badoo.mvicore.binder.using
 import sk.tokar.matus.gr.blogic.NewsListener
 import sk.tokar.matus.gr.blogic.NewsListener.*
+import sk.tokar.matus.gr.blogic.details.Bindings
 import sk.tokar.matus.gr.blogic.list.UsersPresenter.*
 import sk.tokar.matus.gr.common.AppActivityManager
 import sk.tokar.matus.gr.common.MainNavigator
+import sk.tokar.matus.gr.common.MviFragment
 import sk.tokar.matus.gr.common.Transformer
 import sk.tokar.matus.gr.ui.UsersFragment
 import sk.tokar.matus.gr.ui.UsersUiEvent
@@ -18,16 +20,12 @@ import timber.log.Timber
 class UsersListBindings(
     private val presenter: UsersPresenter,
     private val listener: NewsListener
-) {
-    private var initiated: Boolean = false
-    fun create(view: UsersFragment) {
-        if (!initiated) {
-            val binder = Binder(ResumePauseBinderLifecycle(view.lifecycle))
-            binder.bind(view to presenter using UsersViewToPresenter)
-            binder.bind(presenter to view using UsersPresenterToView)
-            binder.bind(presenter.news to listener using UserPresenterNewsToCommonNews)
-            initiated = true
-        }
+) : Bindings<UsersUiEvent, UsersViewModel>() {
+    override fun create(view: MviFragment<UsersUiEvent, UsersViewModel>) {
+        val binder = Binder(ResumePauseBinderLifecycle(view.lifecycle))
+        binder.bind(view to presenter using UsersViewToPresenter)
+        binder.bind(presenter to view using UsersPresenterToView)
+        binder.bind(presenter.news to listener using UserPresenterNewsToCommonNews)
     }
 }
 

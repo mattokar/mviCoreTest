@@ -27,16 +27,18 @@ data class UserDetailViewModel (
 
 class UserDetailsFragment : MviFragment<UserDetailUiEvent, UserDetailViewModel>() {
 
-    private lateinit var bindings: UserDetailBindings
     private val args: UserDetailsFragmentArgs by navArgs()
 
     override fun getLayoutResId(): Int = R.layout.fragment_user_details
     override fun getBindings(): Bindings<UserDetailUiEvent, UserDetailViewModel> = App.component.provideUserDetailBindings()
 
-    override fun init(view: View, savedInstanceState: Bundle?) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         swipe_container.setOnRefreshListener {
             loadUser()
         }
+    }
+
+    override fun afterInitAction() {
         loadUser()
     }
 

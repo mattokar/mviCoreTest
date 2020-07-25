@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Assignment</string>
+    <string name="general_error">Something went wrong. Please, swipe to refresh.</string>
 </resources>

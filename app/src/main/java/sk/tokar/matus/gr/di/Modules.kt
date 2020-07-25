@@ -21,7 +21,6 @@ class FeaturesModule {
     @Provides
     fun provideUsersListBindings(presenter: UsersPresenter, listener: NewsListener): UsersListBindings = UsersListBindings(presenter, listener)
 
-    @Singleton
     @Provides
     fun provideUserDetailBindings(presenter: UserDetailPresenter, listener: NewsListener): UserDetailBindings = UserDetailBindings(presenter, listener)
 }

@@ -3,27 +3,26 @@ package sk.tokar.matus.gr.common
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import sk.tokar.matus.gr.App
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 interface AppActivityManager {
-    fun getCurrentActivity(): AppCompatActivity?
-    fun setCurrentActivity(baseActivity: AppCompatActivity?)
+    fun getCurrentActivity(): BaseActivity?
+    fun setCurrentActivity(baseActivity: BaseActivity?)
     fun registerActivityLifecycleHelper(application: App)
 }
 
 class AppActivityManagerImpl @Inject constructor(
 ) : AppActivityManager {
 
-    private var currentActivity: WeakReference<AppCompatActivity?>? = null
+    private var currentActivity: WeakReference<BaseActivity?>? = null
 
-    override fun getCurrentActivity(): AppCompatActivity? {
+    override fun getCurrentActivity(): BaseActivity? {
         return currentActivity?.get()
     }
 
-    override fun setCurrentActivity(baseActivity: AppCompatActivity?) {
+    override fun setCurrentActivity(baseActivity: BaseActivity?) {
         this.currentActivity = WeakReference(baseActivity)
     }
 
@@ -32,15 +31,15 @@ class AppActivityManagerImpl @Inject constructor(
             Application.ActivityLifecycleCallbacks {
 
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                setCurrentActivity(activity as? AppCompatActivity?)
+                setCurrentActivity(activity as? BaseActivity?)
             }
 
             override fun onActivityResumed(activity: Activity) {
-                setCurrentActivity(activity as? AppCompatActivity?)
+                setCurrentActivity(activity as? BaseActivity?)
             }
 
             override fun onActivityStarted(activity: Activity) {
-                setCurrentActivity(activity as? AppCompatActivity?)
+                setCurrentActivity(activity as? BaseActivity?)
             }
 
             override fun onActivityPaused(activity: Activity) {}
