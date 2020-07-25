@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.Provides
 import sk.tokar.matus.gr.api.ReqresApi
 import sk.tokar.matus.gr.blogic.NewsListener
+import sk.tokar.matus.gr.blogic.details.UserDetailBindings
+import sk.tokar.matus.gr.blogic.details.UserDetailPresenter
 import sk.tokar.matus.gr.blogic.list.UsersListBindings
 import sk.tokar.matus.gr.blogic.list.UsersPresenter
 import sk.tokar.matus.gr.common.*
@@ -19,6 +21,9 @@ class FeaturesModule {
     @Provides
     fun provideUsersListBindings(presenter: UsersPresenter, listener: NewsListener): UsersListBindings = UsersListBindings(presenter, listener)
 
+    @Singleton
+    @Provides
+    fun provideUserDetailBindings(presenter: UserDetailPresenter, listener: NewsListener): UserDetailBindings = UserDetailBindings(presenter, listener)
 }
 
 @Module

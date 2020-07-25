@@ -20,6 +20,7 @@ class NewsListener @Inject constructor(
     override fun accept(news: CommonNews) {
         when (news) {
             is CommonNews.OpenDetail -> mainNavigator.navigate(AppViews.UserDetail(news.id))
+            CommonNews.OpenList -> mainNavigator.navigate(AppViews.UsersList)
         }
     }
 }

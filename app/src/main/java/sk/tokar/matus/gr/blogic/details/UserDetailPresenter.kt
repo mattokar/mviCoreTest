@@ -5,11 +5,19 @@ import com.badoo.mvicore.element.NewsPublisher
 import com.badoo.mvicore.element.Reducer
 import com.badoo.mvicore.feature.ActorReducerFeature
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import sk.tokar.matus.gr.api.ReqresApi
-import sk.tokar.matus.gr.api.models.user_details.UserDetails
+import sk.tokar.matus.gr.api.models.user_details.convert
 import sk.tokar.matus.gr.blogic.details.UserDetailPresenter.*
-import sk.tokar.matus.gr.blogic.list.UsersPresenter
 import javax.inject.Inject
+
+data class UserDetails(
+    val id: Int,
+    val email: String,
+    val firstName: String,
+    val lastName: String,
+    val avatarUrl: String
+)
 
 class UserDetailPresenter@Inject constructor(
     reqresApi: ReqresApi
@@ -21,11 +29,13 @@ class UserDetailPresenter@Inject constructor(
 )  {
 
     sealed class Wish {
-
+        data class Init(val id: Int): Wish()
     }
 
     sealed class Effect {
-
+        data class UserData(val value: UserDetails) : Effect()
+        object Loading : Effect()
+        data class Error(val throwable: Throwable) : Effect()
     }
 
     sealed class News {
@@ -39,20 +49,28 @@ class UserDetailPresenter@Inject constructor(
     )
 
     class ActorImpl(private val api: ReqresApi) : Actor<State, Wish, Effect> {
-        override fun invoke(state: State, action: Wish): Observable<out Effect> {
-            TODO("Not yet implemented")
+        override fun invoke(state: State, wish: Wish): Observable<out Effect> = when(wish){
+            is Wish.Init -> api.getUserDetails(wish.id)
+                .toObservable()
+                .map { Effect.UserData(it.convert()) as Effect}
+                .startWith( Effect.Loading)
+                .onErrorReturn { Effect.Error(it) }
+                .observeOn(AndroidSchedulers.mainThread())
         }
     }
 
     class ReducerImpl: Reducer<State, Effect> {
-        override fun invoke(state: State, effect: Effect): State {
-            TODO("Not yet implemented")
+        override fun invoke(state: State, effect: Effect): State = when(effect){
+            is Effect.UserData -> state.copy(userData = effect.value, loading = false)
+            Effect.Loading -> state.copy(loading = true)
+            is Effect.Error -> state.copy(loading = true)
         }
     }
 
     class NewsPublisherImpl: NewsPublisher<Wish, Effect, State, News> {
-        override fun invoke(action: Wish, effect: Effect, state: State): News? {
-            TODO("Not yet implemented")
+        override fun invoke(action: Wish, effect: Effect, state: State): News? = when(effect){
+            is Effect.Error -> News.Error(effect.throwable)
+            else -> null
         }
 
     }
