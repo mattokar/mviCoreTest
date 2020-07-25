@@ -6,7 +6,9 @@ import sk.tokar.matus.gr.blogic.list.UsersPresenter.News
 import sk.tokar.matus.gr.common.AppViews
 import sk.tokar.matus.gr.common.MainNavigator
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class NewsListener @Inject constructor(
     private val mainNavigator: MainNavigator
 ) : Consumer<NewsListener.CommonNews> {

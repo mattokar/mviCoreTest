@@ -1,6 +1,8 @@
 package sk.tokar.matus.gr.blogic.list
 
 import com.badoo.mvicore.android.AndroidBindings
+import com.badoo.mvicore.android.lifecycle.ResumePauseBinderLifecycle
+import com.badoo.mvicore.binder.Binder
 import com.badoo.mvicore.binder.using
 import sk.tokar.matus.gr.blogic.NewsListener
 import sk.tokar.matus.gr.blogic.NewsListener.*
@@ -16,16 +18,16 @@ import timber.log.Timber
 class UsersListBindings(
     private val presenter: UsersPresenter,
     private val listener: NewsListener
-)
-{
+) {
+    private var initiated: Boolean = false
     fun create(view: UsersFragment) {
-        object : AndroidBindings<UsersFragment>(view){
-            override fun setup(view: UsersFragment) {
-                binder.bind(view to presenter using UsersViewToPresenter)
-                binder.bind(presenter to view using UsersPresenterToView)
-                binder.bind(presenter.news to listener using UserPresenterNewsToCommonNews)
-            }
-        }.setup(view)
+        if (!initiated) {
+            val binder = Binder(ResumePauseBinderLifecycle(view.lifecycle))
+            binder.bind(view to presenter using UsersViewToPresenter)
+            binder.bind(presenter to view using UsersPresenterToView)
+            binder.bind(presenter.news to listener using UserPresenterNewsToCommonNews)
+            initiated = true
+        }
     }
 }
 

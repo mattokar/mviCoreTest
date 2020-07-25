@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.fragment_user_details.swipe_container
 import kotlinx.android.synthetic.main.fragment_users.*
 import sk.tokar.matus.gr.App
 import sk.tokar.matus.gr.R
+import sk.tokar.matus.gr.blogic.details.Bindings
 import sk.tokar.matus.gr.blogic.details.UserDetailBindings
 import sk.tokar.matus.gr.blogic.details.UserDetails
 import sk.tokar.matus.gr.blogic.list.UsersListBindings
@@ -26,19 +27,16 @@ data class UserDetailViewModel (
 
 class UserDetailsFragment : MviFragment<UserDetailUiEvent, UserDetailViewModel>() {
 
-    @Inject
-    lateinit var bindings: UserDetailBindings
-
+    private lateinit var bindings: UserDetailBindings
     private val args: UserDetailsFragmentArgs by navArgs()
 
     override fun getLayoutResId(): Int = R.layout.fragment_user_details
+    override fun getBindings(): Bindings<UserDetailUiEvent, UserDetailViewModel> = App.component.provideUserDetailBindings()
 
     override fun init(view: View, savedInstanceState: Bundle?) {
-        bindings = App.component.provideUserDetailBindings()
         swipe_container.setOnRefreshListener {
             loadUser()
         }
-        bindings.create(this)
         loadUser()
     }
 
@@ -52,4 +50,5 @@ class UserDetailsFragment : MviFragment<UserDetailUiEvent, UserDetailViewModel>(
             tv_email.text = userDetails.email
         }
     }
+
 }

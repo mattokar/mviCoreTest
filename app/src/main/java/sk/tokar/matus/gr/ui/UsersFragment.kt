@@ -26,9 +26,7 @@ data class UsersViewModel(
 
 class UsersFragment : MviFragment<UsersUiEvent, UsersViewModel>() {
 
-    @Inject
-    lateinit var bindings: UsersListBindings
-
+    private lateinit var bindings: UsersListBindings
     private lateinit var adapter: UserListAdapter
 
     private val lazyListener = RecyclerViewLazyListener({
