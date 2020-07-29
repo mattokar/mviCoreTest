@@ -2,6 +2,10 @@ package sk.tokar.matus.gr
 
 import android.annotation.SuppressLint
 import android.app.Application
+import com.badoo.mvicore.consumer.middleware.LoggingMiddleware
+import com.badoo.mvicore.consumer.middlewareconfig.MiddlewareConfiguration
+import com.badoo.mvicore.consumer.middlewareconfig.Middlewares
+import com.badoo.mvicore.consumer.middlewareconfig.WrappingCondition
 import sk.tokar.matus.gr.common.AppActivityManager
 import sk.tokar.matus.gr.di.AndroidModule
 import sk.tokar.matus.gr.di.AppComponent
@@ -27,7 +31,15 @@ class App : Application() {
             .build()
 
         appActivityManager = component.provideAppActivityManager()
-
         appActivityManager.registerActivityLifecycleHelper(this)
+
+        Middlewares.configurations.add(
+            MiddlewareConfiguration(
+                condition = WrappingCondition.Always,
+                factories = listOf(
+                    { consumer -> LoggingMiddleware(consumer, { Timber.d(it) }) }
+                )
+            )
+        )
     }
 }

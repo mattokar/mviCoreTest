@@ -58,9 +58,9 @@ abstract class Transformer<INPUT, OUTPUT> : (INPUT) -> OUTPUT? {
     private val tag by lazy { "TRANSFORMER ${this@Transformer.javaClass.simpleName}" }
 
     override fun invoke(input: INPUT): OUTPUT? {
-        Timber.tag(tag).d("\nINPUT: \n$input")
+        //Timber.tag(tag).d("\nINPUT: \n$input")
         return action(input).also {
-            Timber.tag(tag).d("\nOUTPUT: \n$it")
+            //Timber.tag(tag).d("\nOUTPUT: \n$it")
         }
     }
 
